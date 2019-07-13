@@ -1,0 +1,23 @@
+version: "3"
+services:
+  middleware:
+    build: .
+    ports:
+      - "10008:8080"
+    depends_on:
+      - mysql
+    container_name: web_sql_middleware
+    links:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: web_sql_db
+    ports:
+      - "10006:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=db.123456
+      - MYSQL_USER=web_sql
+      - MYSQL_PASSWORD=db.123456
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
